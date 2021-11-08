@@ -51,7 +51,7 @@ setup(
     keywords='soldity solidity-unfolder solidity-flatliner \
               smart-contracts ethereum',
     install_requires=[],
-    py_modules=['bin/solcflatliner'],
+    # py_modules=['bin/solcflatliner'],
     python_requires='>=3.6,<4',
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -66,7 +66,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'solflatliner = solcflatliner:cli',
+            'solflatliner = solcflatliner.cmd:cli',
         ],
     },
 )
