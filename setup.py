@@ -66,7 +66,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'solflatliner = solcflatliner.cmd:cli',
+            'solflatliner = solflatliner.cmd:cli',
         ],
     },
 )
