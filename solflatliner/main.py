@@ -64,6 +64,8 @@ def main():
         print("Compiler version is not a valid format")
         sys.exit(-1)
 
+
+
     # Check if the input solidity filename is valid
     is_sol_valid(args.file, "Input")
     dirname = os.path.dirname(os.path.abspath(args.file))
