@@ -14,14 +14,18 @@ Manually combining all imports in a solidity file when verifying your contract s
 There are no requirements for this tool.
 
 ```
-pip install solflatliner
+pip3 install solflatliner
+```
+or if you want to get the upgrade
+```
+sudo pip3 install solflatliner --upgrade
 ```
 
 
 ## Usage
 
 ```
-usage: solu [-h] [-o *.sol] *.sol *.*.*
+usage: solflatliner [-h] [-o *.sol] *.sol *.*.*
 
 Unfolds all local imports in a solidity file to generate a flat solidity file.
 Put the output file into out/ folders.
@@ -44,7 +48,7 @@ solu contract-with-imports.sol 0.4.24
 It will output `flat.sol` (default output filename) with solidity version `0.4.24` in `out/` folder.
 
 ```
-solu contract-with-imports.sol 0.4.20 --output contract-flat.sol
+solflatliner contract-with-imports.sol 0.4.20 --output contract-flat.sol
 ```
 It will output `contract-flat.sol` with solidity version `0.4.20` in `out/` folder.
 
@@ -56,4 +60,4 @@ Inspired by [BlockCatIO](https://github.com/BlockCatIO/solidity-flattener).
 
 ### License
 
-MIT License (2018), Jun-You Liu
+MIT License (2022), Jun-You Liu, Heskemo
