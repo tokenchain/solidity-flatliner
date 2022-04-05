@@ -34,6 +34,12 @@ def unfold_imports(imports, infile):
                 # Remove the pragma line in all imports
                 if "pragma" in line[:6]:
                     continue
+                # Remove the LICENSE line in all imports
+                if "// SPDX-License-Identifier:" in line[:27]:
+                    continue
+
+                if "//SPDX-License-Identifier:" in line[:26]:
+                    continue
 
                 # Read the imports
                 if "import" in line[:6]:
@@ -64,8 +70,6 @@ def main():
         print("Compiler version is not a valid format")
         sys.exit(-1)
 
-
-
     # Check if the input solidity filename is valid
     is_sol_valid(args.file, "Input")
     dirname = os.path.dirname(os.path.abspath(args.file))
@@ -87,6 +91,7 @@ def main():
     imports = []
     with open(outfile, "w+") as f:
         f.write("pragma solidity ^{};\n".format(args.version))
+        f.write("// SPDX-License-Identifier: agpl-3.0\n")
         f.write(unfold_imports(imports, os.path.abspath(infile)))
 
     print("🥡 Success! Output: {} in the {} folder".format(os.path.basename(outfile), OUTPUT_FOLDER))
