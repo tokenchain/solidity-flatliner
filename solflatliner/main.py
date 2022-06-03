@@ -4,16 +4,19 @@ import os
 import re
 import sys
 
+DESCRIPTION = """
+Source Verification Unfolds.\n
+Unfolds all local imports in a solidity file to generate a flat solidity file.\n
+Put the output file into out/ folders.
+"""
+
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(
-        description="Unfolds all local imports in a solidity file to generate a flat solidity file.\nPut the output file into out/ folders.", formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument("file", type=str, metavar="*.sol",
-                        help="target filename with imports")
-    parser.add_argument("version", type=str, metavar="*.*.*",
-                        help="solidity compiler version e.g. 0.4.24")
-    parser.add_argument("-o", "--output", type=str, metavar="*.sol",
-                        help="output filename (default: flat.sol)")
+    parser = argparse.ArgumentParser(description=DESCRIPTION, formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument("file", type=str, metavar="*.sol", help="target filename with imports")
+    parser.add_argument("version", type=str, metavar="*.*.*", help="solidity compiler version e.g. 0.4.24")
+    parser.add_argument("-o", "--output", type=str, metavar="*.sol", help="output filename (default: flat.sol)")
+    parser.add_argument("-d", "--ofolder", type=str, metavar="*", help="output folder (default: verify)", default="verify")
     args = parser.parse_args()
 
     return args
@@ -56,38 +59,32 @@ def unfold_imports(imports, infile):
                         sys.exit(-3)
                 else:
                     buffer.append(line)
-
     return ''.join(buffer)
 
 
 def main():
     # Read arguments
     args = parse_arguments()
-
     # Check if the solidity compiler version format is valid
     match = re.search(r"\d+\.\d+\.\d+", args.version)
     if not match:
         print("Compiler version is not a valid format")
         sys.exit(-1)
-
     # Check if the input solidity filename is valid
     is_sol_valid(args.file, "Input")
     dirname = os.path.dirname(os.path.abspath(args.file))
     basename = os.path.basename(os.path.abspath(args.file))
-
     # Check if the output solidity filename is valid
     if not args.output:
         args.output = basename[:-4] + "-flat.sol"
     is_sol_valid(args.output, "Output")
-
     # Make output folder
-    OUTPUT_FOLDER = "out/"
+    OUTPUT_FOLDER = f"{args.ofolder}/"
     if not os.path.exists(OUTPUT_FOLDER):
         os.makedirs(OUTPUT_FOLDER)
-
     infile = args.file
     outfile = os.path.join(OUTPUT_FOLDER, args.output)
-
+    # output file and input file
     imports = []
     with open(outfile, "w+") as f:
         f.write("pragma solidity ^{};\n".format(args.version))
