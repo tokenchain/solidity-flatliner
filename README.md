@@ -1,57 +1,71 @@
-# Solidity Flattener
-*A BlockCAT Technologies contribution - https://blockcat.io*
+# Solidity Flatliner
 
-**Are you tired of having to manually combine all of your files** when verifying your contract source on [Etherscan](https://etherscan.io)? This script automatically traverses the dependency graph and outputs all of your imports in the correct order, ready to be pasted into the contract verifier.
+Unfolds all local imports in a solidity file to generate a flat solidity file.
 
-This is also useful for quickly throwing your source into [Remix](https://ethereum.github.io/browser-solidity/) without having to fumble with local filesystem connections.
 
->**NOTE:** This script does not work with imports that are aliased (i.e. `import './A.sol' as B;` ).
+## Introduction
+Manually combining all imports in a solidity file when verifying your contract source on [Etherscan](https://etherscan.io) is time-consuming and cumbersome. This tool automatically traverses the dependency graph of imports and combines them in the correct order, which is ready to be pasted into the contract verifier.
 
-# Requirements
+> NOTE: This tool won't work with imports that are aliased (i.e. import "./foo.sol" as bar; )
 
-* Python 3.5+, `pip`
-* `solc`, the [Solidity compiler](http://solidity.readthedocs.io/en/develop/installing-solidity.html#binary-packages)
-  * **Note:** The NPM version of the compiler does not expose enough functionality to satisfy the requirements of this tool.
 
-# Installation
+## Installation
 
-`pip install solidity-flattener`
+There are no requirements for this tool.
 
-# Usage
 ```
-usage: solidity_flattener [-h] [--output FILENAME] [--solc-paths SOLC_PATHS]
-                          target_solidity_file
+pip3 install solflatliner
+```
+or if you want to get the upgrade
+```
+sudo pip3 install solflatliner --upgrade
+```
 
-Flattens a target Solidity source file by resolving all of its imports and
-dependencies. NOTE: This does not work with imports that are aliased (i.e.
-import './A.sol' as B; )
+### Create bin file for easy execution
+```
+#!/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8
+# -*- coding: utf-8 -*-
+import re
+import sys
+from solflatliner.cmd import cli
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(cli())
+
+```
+
+## Usage
+
+```
+usage: solflatliner [-h] [-o *.sol] *.sol *.*.*
+
+Unfolds all local imports in a solidity file to generate a flat solidity file.
+Put the output file into out/ folders.
 
 positional arguments:
-  target_solidity_file  Specifies the target Solidity source file to flatten.
+  *.sol                 target filename with imports
+  *.*.*                 solidity compiler version e.g. 0.4.24
 
 optional arguments:
   -h, --help            show this help message and exit
-  --output FILENAME     Specifies the output destination filename. Outputs to
-                        stdout by default.
-  --solc-paths SOLC_PATHS
-                        Specifies the path replacements to pass onto solidity.
-                        See solc --help for more information.
+  -o *.sol, --output *.sol
+                        output filename (default: flat.sol)
+  -f, --ofolder          the output folder (default: verify)
 ```
 
-# Examples
+### Example
 
-To flatten a Solidity file:
+```
+solu contract-with-imports.sol 0.4.24
+```
+It will output `flat.sol` (default output filename) with solidity version `0.4.24` in `verify/` folder.
 
-`solidity_flattener StandardToken.sol`
+```
+solflatliner contract-with-imports.sol 0.4.20 --output contract-flat.sol
+```
+It will output `contract-flat.sol` with solidity version `0.4.20` in `verify/` folder.
 
-To output to a file instead of standard out:
 
-`solidity_flattener --output StandardTokenFlattened.sol StandardToken.sol`
+### License
 
-To provide [import path redirections](http://solidity.readthedocs.io/en/develop/using-the-compiler.html):
-
-`solidity_flattener --solc-paths="my_solidity_path=my_actual_path" StandardToken.sol`
-
-# Contributions
-
-Pull requests are welcome, or feel free to open an issue to discuss.
+MIT License (2022), Jun-You Liu, Heskemo
