@@ -21,6 +21,18 @@ or if you want to get the upgrade
 sudo pip3 install solflatliner --upgrade
 ```
 
+### Create bin file for easy execution
+```
+#!/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8
+# -*- coding: utf-8 -*-
+import re
+import sys
+from solflatliner.cmd import cli
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(cli())
+
+```
 
 ## Usage
 
@@ -38,6 +50,7 @@ optional arguments:
   -h, --help            show this help message and exit
   -o *.sol, --output *.sol
                         output filename (default: flat.sol)
+  -f, --ofolder          the output folder (default: verify)
 ```
 
 ### Example
@@ -45,18 +58,13 @@ optional arguments:
 ```
 solu contract-with-imports.sol 0.4.24
 ```
-It will output `flat.sol` (default output filename) with solidity version `0.4.24` in `out/` folder.
+It will output `flat.sol` (default output filename) with solidity version `0.4.24` in `verify/` folder.
 
 ```
 solflatliner contract-with-imports.sol 0.4.20 --output contract-flat.sol
 ```
-It will output `contract-flat.sol` with solidity version `0.4.20` in `out/` folder.
+It will output `contract-flat.sol` with solidity version `0.4.20` in `verify/` folder.
 
-
-## 	Contact
-Feel free to [contact me](mailto:junyouliu9@gmail.com) if there's any problem. And welcome to open issues and send pull requests.
-
-Inspired by [BlockCatIO](https://github.com/BlockCatIO/solidity-flattener).
 
 ### License
 
