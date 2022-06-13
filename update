@@ -42,17 +42,9 @@ pub_ver() {
   VERSION=$(cat version)
 
   # swap_src
-
-  sudo rm -rf dist
-  rm -rf docs
-  python3 -m pdoc --html flatliner
-  mkdir -p docs
-  mv html/flatliner docs/flatliner
-  rm html
-
   python3 -m pip install --user --upgrade setuptools wheel
   # python3 -m pip install --upgrade setuptools wheel
-  python3 -m readme_renderer README.rst -o ./html/README.html
+  # python3 -m readme_renderer README.rst -o ./html/README.html
   sudo python3 setup.py clean sdist bdist_wheel
 
   echo "========================================================="

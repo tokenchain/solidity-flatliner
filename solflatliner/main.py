@@ -37,7 +37,12 @@ def unfold_imports(library_folder: str, imports: list, infile: str, importline: 
         found = exists(infile)
 
         if not found:
-            infile = os.path.join(library_folder, importline)
+            if importline == "":
+                print(f"There is no file found from the given path {infile}")
+                sys.exit(-5)
+            else:
+                infile = os.path.join(library_folder, importline)
+
         try:
             with open(infile, "r+") as f:
                 for line in f:
