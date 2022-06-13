@@ -4,10 +4,15 @@ Unfolds all local imports in a solidity file to generate a flat solidity file.
 
 
 ## Introduction
-Manually combining all imports in a solidity file when verifying your contract source on [Etherscan](https://etherscan.io) is time-consuming and cumbersome. This tool automatically traverses the dependency graph of imports and combines them in the correct order, which is ready to be pasted into the contract verifier.
+Manually combining all imports in a solidity file when verifying your contract source on [Etherscan](https://etherscan.io) is time-consuming and cumbersome. This tool automatically traverses the dependency graph of imports and combines them in the correct order, which is ready to be pasted into the contract verifier. 
 
 > NOTE: This tool won't work with imports that are aliased (i.e. import "./foo.sol" as bar; )
 
+## Features
+
+- [x] support external library folder destination
+- [x] support output folder name
+- [x] auto remove redundant license place and solidity version code  
 
 ## Installation
 
@@ -51,6 +56,7 @@ optional arguments:
   -o *.sol, --output *.sol
                         output filename (default: flat.sol)
   -f, --ofolder          the output folder (default: verify)
+  -lib, --library       selection of library folder from the execution path. (default: lib)
 ```
 
 ### Example

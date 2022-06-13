@@ -26,33 +26,15 @@ increment_version() {
 }
 
 
-swap_src(){
-  local DEV_SRC=$HOME/Documents/b95/devmoody/moody
-  local DEPLOY_SRC=$HOME/Documents/piplines/moodyeth/moody
-  if [[ -d "$DEV_SRC" ]]; then
-    echo "now swapping the source code"
-    rm -rf moody
-    cp -R $DEV_SRC $DEPLOY_SRC
-  fi
-}
 
 pub_ver() {
   VERSION=$(cat version)
   increment_version $VERSION >version
   VERSION=$(cat version)
 
-  # swap_src
-
-  sudo rm -rf dist
-  rm -rf docs
-  python3 -m pdoc --html flatliner
-  mkdir -p docs
-  mv html/flatliner docs/flatliner
-  rm html
-
   python3 -m pip install --user --upgrade setuptools wheel
   # python3 -m pip install --upgrade setuptools wheel
-  python3 -m readme_renderer README.rst -o ./html/README.html
+  # python3 -m readme_renderer README.rst -o ./html/README.html
   sudo python3 setup.py clean sdist bdist_wheel
 
   echo "========================================================="
@@ -76,5 +58,5 @@ git_update() {
   git push
 }
 
-#pub_ver
+# pub_ver
 git_update
