@@ -1,6 +1,6 @@
-#!python3
-# Author: Eric Huang, BlockCAT Technologies Inc.
-
+#!/usr/bin/env python3
+# Author: Heskemo, HKM Technologies Inc.
+#
 from __future__ import print_function
 
 import argparse as ap
@@ -51,7 +51,8 @@ def flatten_contract(solc_AST, output_dest):
         # Pull contract source
         found_contract_source = contract_source_regex.search(contract_ast)
         if not found_contract_source:
-            print("FATAL: '{name}' has no attached contract source. Aborting.".format(name=contract_name), file=sys.stderr)
+            print("FATAL: '{name}' has no attached contract source. Aborting.".format(name=contract_name),
+                  file=sys.stderr)
             return
 
         contract_sources[contract_name] = found_contract_source.group(1)
@@ -63,7 +64,8 @@ def flatten_contract(solc_AST, output_dest):
 
     if not full_dependency_set.issubset(contracts_with_sources):
         # We require a dependency that we do not have a contract source for, cannot continue
-        print("FATAL: Missing sources for the following contracts: {}".format(full_dependency_set - contracts_with_sources), file=sys.stderr)
+        print("FATAL: Missing sources for the following contracts: {}".format(
+            full_dependency_set - contracts_with_sources), file=sys.stderr)
         return
 
     processed_contracts = set()
@@ -94,14 +96,18 @@ def execute():
     parser = ap.ArgumentParser(
         description="Flattens a target Solidity source file by resolving all of its imports and dependencies.\n \
 					 NOTE: This does not work with imports that are aliased (i.e. import './A.sol' as B; )")
-    parser.add_argument("target_solidity_file",
-                        help="Specifies the target Solidity source file to flatten.")
-    parser.add_argument("--output", type=ap.FileType('w+'), default=sys.stdout, metavar="FILENAME",
-                        help="Specifies the output destination filename. Outputs to stdout by default.")
-    parser.add_argument("--solc-paths", default="",
-                        help="Specifies the path replacements to pass onto solidity. See solc --help for more information.")
-    parser.add_argument("--allow-paths", default="",
-                        help="Specify list of paths (comma separated) to allow solc to import files from. See solc --help for more information.")
+    parser.add_argument(
+        "target_solidity_file",
+        help="Specifies the target Solidity source file to flatten.")
+    parser.add_argument(
+        "--output", type=ap.FileType('w+'), default=sys.stdout, metavar="FILENAME",
+        help="Specifies the output destination filename. Outputs to stdout by default.")
+    parser.add_argument(
+        "--solc-paths", default="",
+        help="Specifies the path replacements to pass onto solidity. See solc --help for more information.")
+    parser.add_argument(
+        "--allow-paths", default="",
+        help="Specify list of paths (comma separated) to allow solc to import files from. See solc --help for more information.")
     args = parser.parse_args()
 
     solc_args = ["solc"]
