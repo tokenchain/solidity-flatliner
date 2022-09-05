@@ -146,6 +146,8 @@ def unfold_imports(library_folder: str, imports: list, signatures: list, infile:
                             print("There's syntax error of import in {}".format(infile))
                             sys.exit(-3)
 
+                        continue
+
                     if skipline is False:
                         buffer.append(line)
 
