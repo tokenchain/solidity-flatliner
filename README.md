@@ -14,6 +14,7 @@ Manually combining all imports in a solidity file when verifying your contract s
 - [x] support output folder name
 - [x] auto remove redundant license place and solidity version code  
 - [x] auto remove redundant contract / interface / abstract contract / library
+- [x] added support safety line
 
 ## Installation
 
