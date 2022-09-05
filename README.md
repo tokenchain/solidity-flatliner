@@ -13,6 +13,7 @@ Manually combining all imports in a solidity file when verifying your contract s
 - [x] support external library folder destination
 - [x] support output folder name
 - [x] auto remove redundant license place and solidity version code  
+- [x] auto remove redundant contract / interface / abstract contract / library
 
 ## Installation
 
@@ -48,15 +49,16 @@ Unfolds all local imports in a solidity file to generate a flat solidity file.
 Put the output file into out/ folders.
 
 positional arguments:
-  *.sol                 target filename with imports
-  *.*.*                 solidity compiler version e.g. 0.4.24
+  *.sol                 Target filename with imports
+  *.*.*                 Solidity compiler version e.g. 0.4.24
 
 optional arguments:
-  -h, --help            show this help message and exit
+  -h, --help            Show this help message and exit
   -o *.sol, --output *.sol
-                        output filename (default: flat.sol)
-  -f, --ofolder          the output folder (default: verify)
-  -lib, --library       selection of library folder from the execution path. (default: lib)
+                        Output filename (default: flat.sol)
+  -f, --ofolder         The output folder (default: verify)
+  -lib, --library       Selection of library folder from the execution path. (default: lib)
+  -l, --license         The license identifier from https://spdx.org/licenses/ (default: AGPL-3.0)
 ```
 
 ### Example
